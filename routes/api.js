@@ -20,7 +20,12 @@ module.exports = function (app, issuesCollection) {
   
     .get(function (req, res){
       var project = req.params.project;
-      
+      issuesCollection.find({issue_title:"sadasd"}, (err, issues) => {
+        if(err) console.log(err);
+        else {
+          console.log(issues)
+        }
+      })
     })
     
     .post(function (req, res){
