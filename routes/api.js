@@ -35,7 +35,7 @@ module.exports = function (app, issuesCollection) {
         if(err) {
           console.log("Error was occured.");
           res.redirect('/' + res.params.project + '/')
-        } else res.redirect('/' + res.params.project + '/')
+        } else res.redirect('/' + req.params.project + '/')
       });
     })
     
