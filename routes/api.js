@@ -23,7 +23,7 @@ module.exports = function (app, issuesCollection) {
       issuesCollection.find({}, (err, issues) => {
         if(err) console.log(err);
         else {
-          res.send(issues)
+          issues.forEach(el => console.log(el))
         }
       })
     })
