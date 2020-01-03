@@ -57,7 +57,8 @@ client.connect(err => {
     app.use(helmet.contentSecurityPolicy({ directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"]
-    }}))
+    }}));
+    app.use(helmet.xssFilter());
     //Start our server and tests!
     app.listen(process.env.PORT || 3000, function () {
       console.log("Listening on port " + process.env.PORT);
