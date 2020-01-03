@@ -20,12 +20,23 @@ module.exports = function (app, issuesCollection) {
   
     .get(function (req, res){
       var project = req.params.project;
-      iss
+      
     })
     
     .post(function (req, res){
-      var project = req.body;
-      console.log(project)
+      var { issue_title, issue_text, created_by, asigned_to, status_text } = req.body;
+      issuesCollection.insertOne({
+          issue_title,
+          issue_text,
+          created_by,
+          asigned_to,
+          status_text
+        }, (err, issue) => {
+        if(err) {
+          console.log("Error was occured.");
+          res.redirect('/' + res.params.project + '/')
+        } else res.redirect('/' + res.params.project + '/')
+      });
     })
     
     .put(function (req, res){
