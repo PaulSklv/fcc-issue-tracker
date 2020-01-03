@@ -21,6 +21,13 @@ app.use(cors({origin: '*'})); //For FCC testing purposes only
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const client = new MongoClient(process.env.MONGO_URI, { useNewUrlPArser: true });
+
+client.connect(err => {
+  const issues
+  
+})
+
 //Sample front-end
 app.route('/:project/')
   .get(function (req, res) {
