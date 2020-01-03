@@ -20,10 +20,10 @@ module.exports = function (app, issuesCollection) {
   
     .get(function (req, res){
       var project = req.params.project;
-      issuesCollection.find({issue_title:"sadasd"}, (err, issues) => {
+      issuesCollection.find({}, (err, issues) => {
         if(err) console.log(err);
         else {
-          console.log(issues)
+          res.send(issues)
         }
       })
     })
