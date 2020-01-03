@@ -9,6 +9,7 @@ var apiRoutes         = require('./routes/api.js');
 var fccTestingRoutes  = require('./routes/fcctesting.js');
 var runner            = require('./test-runner');
 const MongoClient = require('mongodb').MongoClient;
+const helmet = require('helmet');
 
 var app = express();
 
@@ -53,7 +54,10 @@ client.connect(err => {
         .type('text')
         .send('Not Found');
     });
-
+    app.use(helmet.contentSecurityPolicy({ directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"]
+    }}))
     //Start our server and tests!
     app.listen(process.env.PORT || 3000, function () {
       console.log("Listening on port " + process.env.PORT);
