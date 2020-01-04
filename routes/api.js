@@ -19,9 +19,7 @@ module.exports = function (app, issuesCollection) {
   app.route('/api/issues/:project')
   
     .get(function (req, res){
-      var project = req.params.project;
-      const { issue_title, issue_text, created_by, asigned_to, status_text, open } = req.query;
-      issuesCollection.find({}, (err, issues) => {
+      issuesCollection.find(req.query, (err, issues) => {
         if(err) console.log(err);
         else {
           issues.toArray((err, array) => {
@@ -52,7 +50,7 @@ module.exports = function (app, issuesCollection) {
     })
     
     .put(function (req, res){
-      issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: {open: false, updated_on: new Date()} }, (err, issue) => {
+      issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: {open: "closed", updated_on: new Date()} }, (err, issue) => {
         if(err) console.log(err);
         else res.redirect('/' + req.params.project + '/')
       })

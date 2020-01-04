@@ -88,7 +88,7 @@
             data.forEach(function(ele) {
               
               var openstatus;
-              ele.open ? (openstatus = "open") : (openstatus = "closed");
+              ele.open === "open" ? (openstatus = "open") : (openstatus = "closed");
               var single = [
                 '<div class="issue ' + openstatus + '">',
                 '<p class="id">id: ' + ele._id + "</p>",
