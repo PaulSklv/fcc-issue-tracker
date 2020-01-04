@@ -38,7 +38,8 @@ module.exports = function (app, issuesCollection) {
           issue_text,
           created_by,
           asigned_to,
-          status_text
+          status_text,
+          open: "open"
         }, (err, issue) => {
         if(err) {
           console.log("Error was occured.");
