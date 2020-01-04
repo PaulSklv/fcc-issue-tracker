@@ -43,11 +43,9 @@ module.exports = function (app, issuesCollection) {
         }, (err, issue) => {
         if(err) {
           console.log("Error was occured.");
-          res.redirect('/' + req.params.project)
-        }
-        
+          res.redirect('/' + req.params.project + '/')
+        } else res.redirect('/' + req.params.project + '/')
       });
-      res.redirect('/')
     })
     
     .put(function (req, res){
@@ -60,7 +58,6 @@ module.exports = function (app, issuesCollection) {
         if(err) console.log(err);
         else {
           res.redirect('/' + req.params.project + '/');
-          // alert("Issue ID " + req.body._id + " was successfully deleted!");
         }
       })
       
