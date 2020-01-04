@@ -39,7 +39,9 @@ module.exports = function (app, issuesCollection) {
           created_by,
           asigned_to,
           status_text,
-          open: "open"
+          open: "open",
+          created_on: new Date(),
+          updated_on: new Date()
         }, (err, issue) => {
         if(err) {
           console.log("Error was occured.");
@@ -49,7 +51,10 @@ module.exports = function (app, issuesCollection) {
     })
     
     .put(function (req, res){
-      var project = req.params.project;
+      issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: {open: false, updated_om: new Date()} }, (err, issue) => {
+        if(err) console.log(err);
+        else res.redirect('/' + req.params.project + '/')
+      })
       
     })
     
