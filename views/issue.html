@@ -126,7 +126,6 @@
             url: url,
             data: $(this).serialize(),
             success: function(data) {
-console.log("asdasd");
               window.location.reload(true);
             }
           });
@@ -151,9 +150,9 @@ console.log("asdasd");
             type: "DELETE",
             url: url,
             data: { _id: $(this).attr("id") },
-            success: function(data) {
+            complete: () => {
               window.location.reload(true);
-              console.log("sadasd")
+              alert("Issue has successfully deleted!")
             }
           });
           e.preventDefault();

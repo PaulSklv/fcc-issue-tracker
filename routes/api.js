@@ -56,9 +56,7 @@ module.exports = function (app, issuesCollection) {
     .delete(function (req, res){
       issuesCollection.findOneAndDelete({_id: new ObjectId(req.body._id)}, (err, issue) => {
         if(err) console.log(err);
-        else {
-          res.redirect('/' + req.params.project + '/');
-        }
+        else res.redirect('/' + req.params.project + '/')
       })
       
     });
