@@ -20,6 +20,7 @@ module.exports = function (app, issuesCollection) {
   
     .get(function (req, res){
       var project = req.params.project;
+      const { issue_title, issue_text, created_by, asigned_to, status_text, open } = req.query;
       issuesCollection.find({}, (err, issues) => {
         if(err) console.log(err);
         else {
@@ -51,7 +52,7 @@ module.exports = function (app, issuesCollection) {
     })
     
     .put(function (req, res){
-      issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: {open: false, updated_om: new Date()} }, (err, issue) => {
+      issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: {open: false, updated_on: new Date()} }, (err, issue) => {
         if(err) console.log(err);
         else res.redirect('/' + req.params.project + '/')
       })

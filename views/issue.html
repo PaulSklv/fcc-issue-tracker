@@ -137,8 +137,8 @@
             type: "PUT",
             url: url,
             data: { _id: $(this).attr("id"), open: false },
-            success: function(data) {
-              alert(data);
+            complete: function(data) {
+              alert("Successfully updated.")
               window.location.reload(true);
             }
           });
