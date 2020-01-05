@@ -51,6 +51,7 @@ suite('Functional Tests', function() {
             status_text: 'In QA'
           })
           .end((err, res) => {
+            assert.equal(res.status, 200);
             assert.isDefined(res.body.issue_title);
             assert.isDefined(res.body.issue_text);
             assert.isDefined(res.body.created_by);
@@ -70,6 +71,7 @@ suite('Functional Tests', function() {
             status_text: 'In QA'
           })
           .end((err, res) => {
+            assert.equal(res.status, 200);
             assert.isUndefined(res.body.issue_title);
             assert.isUndefined(res.body.issue_text);
             assert.isUndefined(res.body.created_by);
@@ -83,7 +85,23 @@ suite('Functional Tests', function() {
     suite('PUT /api/issues/{project} => text', function() {
       
       test('No body', function(done) {
-        
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: 'Title',
+            issue_text: 'text',
+            created_by: 'Functional Test - Every field filled in',
+            assigned_to: 'Chai and Mocha',
+            status_text: 'In QA'
+          })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.isUndefined(res.body.issue_title);
+            assert.isUndefined(res.body.issue_text);
+            assert.isUndefined(res.body.created_by);
+            
+            done();
+          })
       });
       
       test('One field to update', function(done) {
