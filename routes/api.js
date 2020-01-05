@@ -50,13 +50,20 @@ module.exports = function (app, issuesCollection) {
     })
     
     .put(function (req, res){
-    const { _id, ...rest } = req.body;
-      console.log(rest);
-      issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: { ...rest, updated_on: new Date()} }, (err, issue) => {
-        if(err) console.log(err);
-        else res.redirect('/' + req.params.project + '/')
+      const { _id, ...rest } = req.body;
+      const keys = Object.keys(rest); 
+      let noField = true;
+      keys.forEach(el => {
+        if(rest[el] !== '') {
+          noField = false;
+        }
       })
-      
+      if(!noField) {
+        issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: { ...rest, updated_on: new Date()} }, (err, issue) => {
+          if(err) console.log(err);
+          else res.send('Succsessfully updated')
+        })
+      } else res.send('no updated field sent')
     })
     
     .delete(function (req, res){

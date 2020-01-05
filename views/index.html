@@ -90,10 +90,6 @@
             data: $('#testForm2').serialize(),
             success: function(data) {
               $('#jsonResult').text(JSON.stringify(data));
-            },
-            complete: () => {
-              alert("Successfully updated.");
-              window.location.reload(true);
             }
           });
           e.preventDefault();
@@ -105,10 +101,6 @@
             data: $('#testForm3').serialize(),
             success: function(data) {
               $('#jsonResult').text(JSON.stringify(data));
-            },
-            complete: () => {
-              alert("Successfully deleted.");
-              window.location.reload(true);
             }
           });
           e.preventDefault();
