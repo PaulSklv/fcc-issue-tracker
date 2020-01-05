@@ -90,6 +90,10 @@
             data: $('#testForm2').serialize(),
             success: function(data) {
               $('#jsonResult').text(JSON.stringify(data));
+            },
+            complete: () => {
+              alert("Successfully updated.");
+              window.location.reload(true);
             }
           });
           e.preventDefault();
@@ -97,10 +101,14 @@
         $('#testForm3').submit(function(e) {
           $.ajax({
             url: '/api/issues/apitest',
-            type: 'delete',
+            type: 'DELETE',
             data: $('#testForm3').serialize(),
             success: function(data) {
               $('#jsonResult').text(JSON.stringify(data));
+            },
+            complete: () => {
+              alert("Successfully deleted.");
+              window.location.reload(true);
             }
           });
           e.preventDefault();
