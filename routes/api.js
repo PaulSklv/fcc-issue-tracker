@@ -61,7 +61,7 @@ module.exports = function (app, issuesCollection) {
       if(!noField) {
         issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: { ...rest, updated_on: new Date()} }, (err, issue) => {
           if(err) res.send('Could not update');
-          else console.log(err);
+          else console.log(issue);
         })
       } else res.send('no updated field sent');
     })
