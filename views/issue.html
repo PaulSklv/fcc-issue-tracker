@@ -151,7 +151,7 @@
             url: url,
             data: { _id: $(this).attr("id") },
             complete: () => {
-              alert("Issue has successfully deleted!")
+              alert(data)
               window.location.reload(true);
             }
           });

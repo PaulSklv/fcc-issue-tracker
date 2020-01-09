@@ -98,9 +98,17 @@ module.exports = function(app, issuesCollection) {
     })
 
     .delete(function(req, res) {
-      connection.then(client => {
-        client.db("issueTracker").collection(req)
-      })
+      if (req.body._id) {
+        connection.then(client => {
+          client
+            .db("issueTracker")
+            .collection(req.params.project)
+            .findOneAndDelete({ _id: new ObjectID({ _id: req.body._id }) })
+            .then(result => res.send("Succsessfully deleted!"))
+            .catch(error => res.send("Could not delete " + req.body._id));
+        });
+      } else res.send("_id error");
+
       // issuesCollection.findOneAndDelete(
       //   { _id: new ObjectID(req.body._id) },
       //   (err, issue) => {
