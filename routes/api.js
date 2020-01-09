@@ -27,11 +27,11 @@ module.exports = function (app, issuesCollection) {
         client.db('issueTracker').collection('issues').find(req.query, (err, issues) => {
           if(err) console.log(err);
           else {
-            console.log(issues.ops)
-            // issues.toArray((err, array) => {
-            //   if(err) console.log(err)
-            //   else res.send(array);
-            // })
+            
+            issues.toArray((err, array) => {
+              if(err) console.log(err)
+              else res.send(array);
+            })
           }
         }); 
       })
