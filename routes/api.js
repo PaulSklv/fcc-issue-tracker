@@ -18,38 +18,20 @@ module.exports = function (app, issuesCollection) {
   
     .get(function (req, res) {
       connection.then(client => {
-        client.db('issueTracker').collection('issues').find(req.params.project).toArray().then((result) => {
+        client.db('issueTracker').collection(req.params.project).find({}).toArray().then((result) => {
           res.send(result);
         }).catch(error => {
           return console.log("Error was occured!", error)
-        })
+        });
       }).catch(error => {
         return console.log("Error was occured!", error)
-      })
-//       MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
-//         if(error) {
-//           return console.log('Unable to connect to database!');
-//         }
-
-//         client.db('issueTracker').collection('issues').find(req.params.project).toArray((err, issues) => {
-//           if(err) return console.log(err);
-//           res.send(issues);
-//         }); 
-//       })
-      // dataBaseCollection().find(req.query, (err, issues) => {
-      //   if(err) console.log(err);
-      //   else {
-      //     issues.toArray((err, array) => {
-      //       if(err) console.log(err)
-      //       else res.send(array);
-      //     })
-      //   }
-      // })
+      });
     })
     
     .post(function (req, res){
       var { issue_title, issue_text, created_by, asigned_to, status_text } = req.body;
-      issuesCollection.insertOne({
+      connection.then(client => {
+        client.db('issueTracker').collection(req.params.project).insertOne({
           issue_title,
           issue_text,
           created_by,
@@ -58,14 +40,9 @@ module.exports = function (app, issuesCollection) {
           open: "open",
           created_on: new Date(),
           updated_on: new Date()
-        }, (err, issue) => {
-        if(err) {
-          console.log("Error was occured.");
-          res.redirect('/' + req.params.project + '/')
-        } else res.redirect('/' + req.params.project + '/')
-      });
+        }).then(() => res.redirect('/' + req.params.project + '/')).catch(error => {return console.log('Error was occured!', error)})
+      }).catch(error => {return console.log('Error was occured!', error)})
     })
-    
     .put(function (req, res){
       const { _id, ...rest } = req.body;
       const keys = Object.keys(rest); 
