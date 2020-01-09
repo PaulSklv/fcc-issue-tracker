@@ -97,7 +97,7 @@ module.exports = function(app, issuesCollection) {
               .catch(error => res.send("Colud not update " + _id));
           })
           .catch(error => res.send("Could not update " + _id));
-      } else res.send("no updated field sent");
+      } else res.send("no updated fields!");
     })
 
     .delete(function(req, res) {
