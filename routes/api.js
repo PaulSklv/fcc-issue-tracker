@@ -102,7 +102,8 @@ module.exports = function(app, issuesCollection) {
     })
 
     .delete(function(req, res) {
-      if (req.body._id) {
+      console.log(req.body._id)
+      if (req.body._id !== "") {
         connection.then(client => {
           client
             .db("issueTracker")

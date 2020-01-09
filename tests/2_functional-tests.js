@@ -193,7 +193,9 @@ suite("Functional Tests", function() {
   );
 
   suite("DELETE /api/issues/{project} => text", function() {
-    test("No _id", function(done) {});
+    test("No _id", function(done) {
+      chai.request(server).delete("/api/issues/test").send({ })
+    });
 
     test("Valid _id", function(done) {});
   });
