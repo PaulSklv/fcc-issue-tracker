@@ -21,15 +21,9 @@ module.exports = function (app, issuesCollection) {
           return console.log('Unable to connect to database!');
         }
 
-        client.db('issueTracker').collection('issues').find(req.query, (err, issues) => {
-          if(err) console.log(err);
-          else {
-            
-            issues.toArray((err, array) => {
-              if(err) console.log(err)
-              else res.send(array);
-            })
-          }
+        client.db('issueTracker').collection('issues').find(req.params.project).toArray((err, issues) => {
+          if(err) return console.log(err);
+          res.send(issues);
         }); 
       })
       // dataBaseCollection().find(req.query, (err, issues) => {
