@@ -15,27 +15,35 @@ var ObjectId = require('mongodb').ObjectID;
 
 
 module.exports = function (app, issuesCollection) {
-  const dataBaseCollection = () => {
-    return MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true }, (error, client) => {
-      if(error) {
-        return console.log('Unable to connect to database!');
-      }
-
-      return client.db('issueTracker').collection('issues'); 
-    })
-  }
+  
   app.route('/api/issues/:project')
   
-    .get(function (req, res){
-      dataBaseCollection().find(req.query, (err, issues) => {
-        if(err) console.log(err);
-        else {
-          issues.toArray((err, array) => {
-            if(err) console.log(err)
-            else res.send(array);
-          })
+    .get(function (req, res) {
+      MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
+        if(error) {
+          return console.log('Unable to connect to database!');
         }
+
+        client.db('issueTracker').collection('issues').find(req.query, (err, issues) => {
+          if(err) console.log(err);
+          else {
+            console.log(issues.ops)
+            // issues.toArray((err, array) => {
+            //   if(err) console.log(err)
+            //   else res.send(array);
+            // })
+          }
+        }); 
       })
+      // dataBaseCollection().find(req.query, (err, issues) => {
+      //   if(err) console.log(err);
+      //   else {
+      //     issues.toArray((err, array) => {
+      //       if(err) console.log(err)
+      //       else res.send(array);
+      //     })
+      //   }
+      // })
     })
     
     .post(function (req, res){
