@@ -9,10 +9,7 @@
 'use strict';
 
 var expect = require('chai').expect;
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
-
-
+const { MongoClient, ObjectID } = require('mongodb')
 
 module.exports = function (app, issuesCollection) {
   
