@@ -72,7 +72,7 @@ module.exports = function (app, issuesCollection) {
         }
       })
       if(!noField) {
-        issuesCollection.update({_id: new ObjectId(req.body._id)}, { $set: { ...rest, updated_on: new Date()} }, (err, issue) => {
+        issuesCollection.update({_id: new ObjectID(req.body._id)}, { $set: { ...rest, updated_on: new Date()} }, (err, issue) => {
           if(err) res.send('Could not update');
           else console.log(issue);
         }).catch(() => res.send('Could not update'))
@@ -80,7 +80,7 @@ module.exports = function (app, issuesCollection) {
     })
     
     .delete(function (req, res){
-      issuesCollection.findOneAndDelete({_id: new ObjectId(req.body._id)}, (err, issue) => {
+      issuesCollection.findOneAndDelete({_id: new ObjectID(req.body._id)}, (err, issue) => {
         if(err) console.log(err);
         else res.redirect('/' + req.params.project + '/')
       })
