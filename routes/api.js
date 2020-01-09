@@ -12,22 +12,22 @@ var expect = require('chai').expect;
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 
-const databaseConnect = () => {
-  MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true }, (error, client) => {
-    if(error) {
-      return console.log('Unable to connect to database!');
-    }
-    
-    const db = client.db('issueTracker')
-  })
-}
+
 
 module.exports = function (app, issuesCollection) {
+  const dataBaseCollection = () => {
+    return MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true }, (error, client) => {
+      if(error) {
+        return console.log('Unable to connect to database!');
+      }
 
+      return client.db('issueTracker').collection('issues'); 
+    })
+  }
   app.route('/api/issues/:project')
   
     .get(function (req, res){
-      issuesCollection.find(req.query, (err, issues) => {
+      dataBaseCollection().find(req.query, (err, issues) => {
         if(err) console.log(err);
         else {
           issues.toArray((err, array) => {
