@@ -9,10 +9,18 @@
 'use strict';
 
 var expect = require('chai').expect;
-var MongoClient = require('mongodb');
+var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 
-const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
+const databaseConnect = () => {
+  MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true }, (error, client) => {
+    if(error) {
+      return console.log('Unable to connect to database!');
+    }
+    
+    const db = client.db('issueTracker')
+  })
+}
 
 module.exports = function (app, issuesCollection) {
 
