@@ -47,6 +47,9 @@ module.exports = function(app, issuesCollection) {
         asigned_to,
         status_text
       } = req.body;
+      if(!issue_title || !issue_text || !created_by) {
+        return res.send("Missing required field!")
+      }
       connection
         .then(client => {
           client
@@ -62,7 +65,7 @@ module.exports = function(app, issuesCollection) {
               created_on: new Date(),
               updated_on: new Date()
             })
-            .then(() => res.redirect("/" + req.params.project + "/"))
+            .then(() => res.send("Successfully opened!"))
             .catch(error => {
               return console.log("Error was occured!", error);
             });
@@ -103,7 +106,7 @@ module.exports = function(app, issuesCollection) {
           client
             .db("issueTracker")
             .collection(req.params.project)
-            .findOneAndDelete({ _id: new ObjectID({ _id: req.body._id }) })
+            .findOneAndDelete({ _id: new ObjectID(req.body._id) })
             .then(result => res.send("Succsessfully deleted!"))
             .catch(error => res.send("Could not delete " + req.body._id));
         });

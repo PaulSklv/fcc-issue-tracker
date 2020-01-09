@@ -72,9 +72,7 @@ suite('Functional Tests', function() {
           })
           .end((err, res) => {
             assert.equal(res.status, 200);
-            assert.isUndefined(res.body.issue_title);
-            assert.isUndefined(res.body.issue_text);
-            assert.isUndefined(res.body.created_by);
+            assert.equal(res.text, "Missing required fields!");
             
             done();
           })
@@ -87,18 +85,10 @@ suite('Functional Tests', function() {
       test('No body', function(done) {
         chai.request(server)
           .post('/api/issues/test')
-          .send({
-            issue_title: 'Title',
-            issue_text: 'text',
-            created_by: 'Functional Test - Every field filled in',
-            assigned_to: 'Chai and Mocha',
-            status_text: 'In QA'
-          })
+          .send({ })
           .end((err, res) => {
             assert.equal(res.status, 200);
-            assert.isUndefined(res.body.issue_title);
-            assert.isUndefined(res.body.issue_text);
-            assert.isUndefined(res.body.created_by);
+            assert.equal(res.text, "no updated fields!")
             
             done();
           })

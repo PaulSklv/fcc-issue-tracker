@@ -126,6 +126,7 @@
             url: url,
             data: $(this).serialize(),
             success: function(data) {
+              alert(data);
               window.location.reload(true);
             }
           });
@@ -150,7 +151,7 @@
             type: "DELETE",
             url: url,
             data: { _id: $(this).attr("id") },
-            complete: () => {
+            success: (data) => {
               alert(data)
               window.location.reload(true);
             }
