@@ -81,29 +81,32 @@ module.exports = function(app, issuesCollection) {
         }
       });
       if (!noField) {
-        connection.then(client => {
-          client
-            .db("issueTracker")
-            .collection(req.params.project)
-            .updateOne(
-              { _id: new ObjectID(_id) },
-              { $set: { ...rest, updated_on: new Date() } }
-            ).catch(error => res.send("Colud not update " + _id));
-        })
-        // issuesCollection.update({_id: new ObjectID(req.body._id)}, { $set: { ...rest, updated_on: new Date()} }, (err, issue) => {
-        //   if(err) res.send('Could not update');
-        //   else console.log(issue);
-        // }).catch(() => res.send('Could not update'))
+        connection
+          .then(client => {
+            client
+              .db("issueTracker")
+              .collection(req.params.project)
+              .updateOne(
+                { _id: new ObjectID(_id) },
+                { $set: { ...rest, updated_on: new Date() } }
+              )
+              .then(result => res.send("Successfully updated!"))
+              .catch(error => res.send("Colud not update " + _id));
+          })
+          .catch(error => res.send("Could not update " + _id));
       } else res.send("no updated field sent");
     })
 
     .delete(function(req, res) {
-      issuesCollection.findOneAndDelete(
-        { _id: new ObjectID(req.body._id) },
-        (err, issue) => {
-          if (err) console.log(err);
-          else res.redirect("/" + req.params.project + "/");
-        }
-      );
+      connection.then(client => {
+        client.db("issueTracker").collection(req)
+      })
+      // issuesCollection.findOneAndDelete(
+      //   { _id: new ObjectID(req.body._id) },
+      //   (err, issue) => {
+      //     if (err) console.log(err);
+      //     else res.redirect("/" + req.params.project + "/");
+      //   }
+      // );
     });
 };
